@@ -14,8 +14,7 @@ on:
   pull_request:
 
 env:
-  # TODO: Change variable to your image's name.
-  IMAGE_NAME: image
+  IMAGE_NAME: simulationcraftorg/simc
 
 jobs:
   # Run tests.
@@ -47,11 +46,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Download SimulationCraft
+        run: |
+          git clone --depth 1 --single-branch https://github.com/simulationcraft/simc.git .
+
+      - name: Get SimulationCraft version
+        id: simc_version
+        run: echo "name=$(grep 'SIMC_WOW_VERSION' engine/dbc/generated/client_data_version.inc | sed -E -e 's/#define SIMC_WOW_VERSION \"(.+)\"/\1/') >> $GITHUB_ENV
+
+      - name: Get SimulationCraft version
+        id: simc_hash
+        run: echo "name=$(git rev-parse HEAD) >> $GITHUB_ENV
+
+      - name: Get date
+        id: date
+        run: echo "name=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        run: |
+          docker build . --file Dockerfile --tag $IMAGE_NAME:${{ steps.simc_version.outputs.simc_version }}-${{ steps.date.outputs.date }}-${{ steps.date.outputs.date }}-${{ steps.simc_hash.outputs.simc_hash }}
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.DOCKERHUB }}" | docker login docker.pkg.github.com -u ${{ secrets.DOCKERHUBUSER }} --password-stdin
 
       - name: Push image
         run: |
