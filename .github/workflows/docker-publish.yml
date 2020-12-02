@@ -16,7 +16,7 @@ on:
 env:
   # IMAGE_NAME: simulationcraftorg/simulationcraft
   # TODO: Needs simulationcraftorg somehow...
-  IMAGE_NAME: simulationcraft
+  IMAGE_NAME: simc
 
 jobs:
   # Push image to GitHub Packages.
@@ -61,7 +61,7 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=docker.pkg.github.com/simulationcraftorg/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
