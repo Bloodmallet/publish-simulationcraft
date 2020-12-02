@@ -14,7 +14,9 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: simulationcraftorg/simc
+  # IMAGE_NAME: simulationcraftorg/simulationcraft
+  # TODO: Needs simulationcraftorg somehow...
+  IMAGE_NAME: simulationcraft
 
 jobs:
   # Push image to GitHub Packages.
