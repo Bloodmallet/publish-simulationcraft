@@ -36,12 +36,12 @@ jobs:
 
       - name: Get SimulationCraft version
         id: simc_version
-        run: echo "name=$(grep 'SIMC_WOW_VERSION' engine/dbc/generated/client_data_version.inc | sed -E -e 's/#define SIMC_WOW_VERSION \"(.+)\"/\1/') >> $GITHUB_ENV
+        run: echo "name=$(grep 'SIMC_WOW_VERSION' engine/dbc/generated/client_data_version.inc | sed -E -e 's/#define SIMC_WOW_VERSION \"(.+)\"/\1/')" >> $GITHUB_ENV
         working-directory: ./simc
 
       - name: Get SimulationCraft version
         id: simc_hash
-        run: echo "name=$(git rev-parse HEAD) >> $GITHUB_ENV
+        run: echo "name=$(git rev-parse HEAD)" >> $GITHUB_ENV
         working-directory: ./simc
 
       - name: Get date
