@@ -51,7 +51,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build . --file Dockerfile --tag $IMAGE_NAME:$SIMC_VERSION-$DATE-$SIMC_HASH
+          docker build . --file Dockerfile --tag $IMAGE_NAME:$SIMC_VERSION-$DATE-$SIMC_HASH --tag $IMAGE_NAME:latest
         working-directory: ./simc
 
       - name: Log into registry
