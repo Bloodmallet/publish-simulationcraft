@@ -14,8 +14,7 @@ on:
   pull_request:
 
 env:
-  # IMAGE_NAME: simulationcraftorg/simulationcraft
-  # TODO: Needs simulationcraftorg somehow...
+  ORG_NAME: simulationcraftorg
   IMAGE_NAME: simc
 
 jobs:
@@ -65,7 +64,10 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_ID=simulationcraftorg/$IMAGE_NAME
+          IMAGE_ID=$ORG_NAME/$IMAGE_NAME
+
+          docker tag $IMAGE_NAME:$VERSION_STRING $IMAGE_ID:$VERSION_STRING
+          docker tag $IMAGE_NAME:latest $IMAGE_ID:latest
 
           docker push $IMAGE_ID:$VERSION_STRING
           docker push $IMAGE_ID:latest
