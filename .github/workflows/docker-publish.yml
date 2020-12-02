@@ -35,20 +35,23 @@ jobs:
           git clone --depth 1 --single-branch https://github.com/simulationcraft/simc.git simc
 
       - name: Get SimulationCraft version
-        run: echo "simc_version=$(grep 'SIMC_WOW_VERSION' engine/dbc/generated/client_data_version.inc | sed -E -e 's/#define SIMC_WOW_VERSION \"(.+)\"/\1/')" >> $GITHUB_ENV
+        run: |
+          echo "simc_version=$(grep 'SIMC_WOW_VERSION' engine/dbc/generated/client_data_version.inc | sed -E -e 's/#define SIMC_WOW_VERSION \"(.+)\"/\1/')" >> $GITHUB_ENV
         working-directory: ./simc
 
       - name: Get SimulationCraft version
-        run: echo "simc_hash=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        run: |
+          echo "simc_hash=$(git rev-parse HEAD)" >> $GITHUB_ENV
         working-directory: ./simc
 
       - name: Get date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: |
+          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
         working-directory: ./simc
 
       - name: Build image
         run: |
-          docker build . --file Dockerfile --tag $IMAGE_NAME:${{ simc_version }}-${{ date }}-${{ simc_hash }}
+          docker build . --file Dockerfile --tag $IMAGE_NAME:${ simc_version }-${ date }-${ simc_hash }
         working-directory: ./simc
 
       - name: Log into registry
